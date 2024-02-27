@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
-import { User } from "@/types/types";
+import { User } from "@/types";
 import { useEffect } from "react";
 
 const formSchema = z.object({

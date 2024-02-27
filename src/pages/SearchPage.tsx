@@ -123,7 +123,7 @@ const SearchPage = () => {
           />
         </div>
 
-        {results.data.map((restaurant) => (
+        {results.data.map((restaurant: any) => (
           <SearchResultCard restaurant={restaurant} />
         ))}
 
