@@ -70,7 +70,7 @@ const SearchPage = () => {
   };
 
   if (isLoading) {
-    <span>Loading...</span>;
+    return <span>Loading...</span>;
   }
 
   if (!results?.data || !city) {
