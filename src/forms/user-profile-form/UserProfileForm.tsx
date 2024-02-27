@@ -8,11 +8,12 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
-import { User } from "types";
+import { User } from "@/types/types";
 import { useEffect } from "react";
 
 const formSchema = z.object({
@@ -29,34 +30,38 @@ type Props = {
   currentUser: User;
   onSave: (userProfileData: UserFormData) => void;
   isLoading: boolean;
+  title?: string;
+  buttonText?: string;
 };
 
-
-
-const layout = ({ onSave, isLoading, currentUser}: Props) => {
+const UserProfileForm = ({
+  onSave,
+  isLoading,
+  currentUser,
+  title = "User Profile",
+  buttonText = "Submit",
+}: Props) => {
   const form = useForm<UserFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: currentUser,
   });
 
-  
-useEffect(() => {
-  form.reset(currentUser);
-}, [currentUser, form]);
+  useEffect(() => {
+    form.reset(currentUser);
+  }, [currentUser, form]);
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSave)}
-        className="space-y-4 bg-gray-50 rounded-lg md:p:10"
+        className="space-y-4 bg-gray-50 rounded-lg md:p-10"
       >
         <div>
-          <h2 className="text=2xl font=bold">User Profile Form </h2>
+          <h2 className="text-2xl font-bold">{title}</h2>
           <FormDescription>
             View and change your profile information here
           </FormDescription>
         </div>
-
         <FormField
           control={form.control}
           name="email"
@@ -79,56 +84,57 @@ useEffect(() => {
               <FormControl>
                 <Input {...field} className="bg-white" />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
 
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row gap-4">
           <FormField
             control={form.control}
             name="addressLine1"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>Address Line 1</FormLabel>
                 <FormControl>
                   <Input {...field} className="bg-white" />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="city"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>City</FormLabel>
                 <FormControl>
                   <Input {...field} className="bg-white" />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="country"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>Country</FormLabel>
                 <FormControl>
                   <Input {...field} className="bg-white" />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
         </div>
-
         {isLoading ? (
           <LoadingButton />
         ) : (
           <Button type="submit" className="bg-orange-500">
-            Submit
+            {buttonText}
           </Button>
         )}
       </form>
@@ -136,4 +142,4 @@ useEffect(() => {
   );
 };
 
-export default layout;
+export default UserProfileForm;
